@@ -23,5 +23,6 @@ from users import views as users_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('sites/',sites_views.list_sites, name='feed'),
-    path('users/login/',users_views.login_view, name='login')
+    path('users/login/',users_views.login_view, name='login'),
+    path('users/login/',users_views.logout_view, name='logout')
 ]

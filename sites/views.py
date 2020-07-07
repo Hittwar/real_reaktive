@@ -37,6 +37,7 @@ sites = [
     }
 ]
 
+@login_required
 # Create your views here.
 def list_sites(request):
     """ List existing sites - sites:sites sent de dict to feed.html"""

@@ -1,30 +1,24 @@
-"""Users Views"""
+"""Users views."""
 
 # Django
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import views as auth_views
 from django.shortcuts import render, redirect
+from django.urls import reverse, reverse_lazy
+from django.views.generic import DetailView, FormView, UpdateView
+
+# Models
+from django.contrib.auth.models import User
+from users.models import Profile
 
 
-# Create your views here.
-
-def login_view(request):
+class LoginView(auth_views.LoginView):
     """Login view."""
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user:
-            login(request, user)
-            return redirect('feed')
-        else:
-            return render(request, 'users/login.html', {'error': 'Invalid username and password'})
+    template_name = 'users/login.html'
 
-    return render(request, 'users/login.html')
+class LogoutView(LoginRequiredMixin, auth_views.LogoutView):
+    """logout view"""
+    template_name = 'users/logout.html'
 
-@login_required
-def logout_view(request):
-    """Logout """
-    logout(request)
-    """Login because is the name of the URL"""
-    return redirect('login')
